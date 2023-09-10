@@ -2,7 +2,19 @@ from .functions import complete_with_functions
 from .tools import functions
 from .stringifyIpynb import stringifyIpynb
 
-print("Enter your request")
+import os
+
+# mkdir kaggle/
+os.mkdir("kaggle")
+
+# download from kaggle link
+print("Paste kaggle download code (leave blank to skip)")
+notebook_cmd = input()
+if len(notebook_cmd) > 0:
+    os.system(notebook_cmd+" -p kaggle/")
+    os.system("mv kaggle/* workspace/notebook.ipynb")
+
+print("What should I do?")
 user_request = input()
 
 # get list of files in workspace
@@ -18,7 +30,7 @@ while True:
     The task is: {user_request}
     First, lay out the steps you will take to complete the task. Think step by step.
     Then write the code to complete the task.
-    Note: don't run your code *too* often, as this computer is very slow.
+    Run your code often to make sure it works.
     Never use tensorflow or keras - prefer pytorch.
 
     Workspace contents: {files}

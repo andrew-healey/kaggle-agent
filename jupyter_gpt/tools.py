@@ -43,27 +43,20 @@ def append_new_cell(lang:str, cell_source:str):
 def edit_python_cell(cell_num:int,new_source:str):
     """
     Edits the source of a Python cell in the notebook.
-    The cell_num should be pulled from i.e. "In [1]:"
-    cell_num is 1-indexed.
     """
 
-    print(f"Editing cell {cell_num}")
+    print(f"Editing cell #{cell_num}")
 
     with open("workspace/notebook.ipynb") as f:
         nb = json.load(f)
 
     wrote_cell = False
-    cell_nums = [cell.get("execution_count",-1) for cell in nb["cells"]]
-    for cell in nb["cells"]:
-        if cell["cell_type"] == "code" and cell["execution_count"] == cell_num:
 
-            cell["source"] = str_to_source(new_source)
-            wrote_cell = True
-            break
-    
-    if not wrote_cell:
-        print(f"Could not find cell {json.dumps(cell_num)} - cell nums are {json.dumps(cell_nums)}")
-        raise Exception(f"Cell {cell_num} does not exist! Remember to use the number from i.e. 'In [1]:'")
+    if cell_num > len(nb["cells"]):
+        raise Exception(f"Cell {cell_num} does not exist!")
+
+    cell = nb["cells"][cell_num]
+    cell["source"] = str_to_source(new_source)
 
     with open("workspace/notebook.ipynb","w") as f:
         json.dump(nb,f)

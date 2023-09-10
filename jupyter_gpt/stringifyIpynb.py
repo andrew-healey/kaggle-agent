@@ -32,9 +32,9 @@ def stringifyIpynb(path):
         if len(nb["cells"]) == 0:
             return "<notebook is empty>",-1
 
-        for cell in nb["cells"]:
+        for i,cell in enumerate(nb["cells"]):
             if cell["cell_type"] == "code":
-                out += f"In [{cell['execution_count']}]:\n"
+                out += f"In [{i}]:\n"
                 src = stringify_lines(cell["source"],max_src_len)
                 out += fences(src,"python")
 
@@ -43,7 +43,7 @@ def stringifyIpynb(path):
                     if output["output_type"] == "error":
                         err = "\n".join(output["traceback"])+"\n"
                         out += fences(err)
-                        failed_cell_num = cell["execution_count"]
+                        failed_cell_num = i
                     elif output["output_type"] == "stream":
                         out += fences(stringify_lines(output["text"]))
                     elif output["output_type"] == "display_data":
