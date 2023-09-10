@@ -41,4 +41,4 @@ def run():
     client.execute()
     nbformat.write(nb, 'workspace/notebook.ipynb')
 
-    print("Done")
+    # print("Done")

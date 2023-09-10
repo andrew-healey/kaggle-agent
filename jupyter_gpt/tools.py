@@ -95,7 +95,7 @@ def exit():
     Exits the Jupyter notebook - only call this when you are done!
     """
 
-    print_system_text("Exiting...")
+    print_system_text("Done! Exiting...")
     return "__pass__"
 
 functions = [
