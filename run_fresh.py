@@ -1,12 +1,20 @@
+# read filename from command line
+import sys
+filename = sys.argv[1]
+assert filename.endswith('.ipynb'), "File must be a Jupyter notebook"
+
 import nbformat
 from nbclient import NotebookClient
 
-nb = nbformat.read("workspace/notebook.ipynb", as_version=4)
+nb = nbformat.read(filename, as_version=4)
 client = NotebookClient(nb, timeout=60_000, kernel_name='python3', resources={'metadata': {'path': 'workspace/'}})
 
-client.save = lambda *args: nbformat.write(nb, 'executed_notebook.ipynb')
+def save(*args):
+    nbformat.write(nb, filename)
+
+client.save = save
 
 client.execute()
-nbformat.write(nb, 'executed_notebook.ipynb')
+save()
 
 print("Done")
