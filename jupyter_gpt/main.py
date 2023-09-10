@@ -1,20 +1,22 @@
 from .functions import complete_with_functions
 from .tools import functions
 from .stringifyIpynb import stringifyIpynb
+from .print import print_agent_response, print_system_text
 
 import os
 
 # mkdir kaggle/
-os.mkdir("kaggle")
+if not os.path.exists("kaggle"):
+    os.mkdir("kaggle")
 
 # download from kaggle link
-print("Paste kaggle download code (leave blank to skip)")
+print_system_text("Paste kaggle download code (leave blank to skip)")
 notebook_cmd = input()
 if len(notebook_cmd) > 0:
     os.system(notebook_cmd+" -p kaggle/")
     os.system("mv kaggle/* workspace/notebook.ipynb")
 
-print("What should I do?")
+print_agent_response("What would you like me to do?")
 user_request = input()
 
 # get list of files in workspace

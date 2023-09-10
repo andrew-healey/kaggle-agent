@@ -1,4 +1,5 @@
 from .stringifyIpynb import stringifyIpynb
+from .print import print_agent_response, print_system_text
 
 import json
 
@@ -11,7 +12,7 @@ def append_new_cell(lang:str, cell_source:str):
     Language can be "python" or "markdown"
     """
 
-    print(f"Appending new {lang} cell")
+    print_system_text(f"Appended new {lang} cell")
     # print(f"Source: {cell_source}")
 
     assert lang in ["python", "markdown"], "Language must be python or markdown"
@@ -45,7 +46,7 @@ def edit_python_cell(cell_num:int,new_source:str):
     Edits the source of a Python cell in the notebook.
     """
 
-    print(f"Editing cell #{cell_num}")
+    print_system_text(f"Editing cell #{cell_num}")
 
     with open("workspace/notebook.ipynb") as f:
         nb = json.load(f)
@@ -71,14 +72,13 @@ def run_notebook():
     Use this function liberally.
     """
 
-    print("Running notebook...")
+    print_system_text("Running notebook...")
     try:
         run()
     except Exception as e:
-        print("Error running notebook!")
-        print(e)
+        print_system_text("Error running notebook!")
         raise e
-    print("Ran notebook")
+    print_system_text("Notebook complete")
 
     new_ipynb,failed_cell_num = stringifyIpynb("workspace/notebook.ipynb")
     did_fail = failed_cell_num != -1
@@ -95,7 +95,7 @@ def exit():
     Exits the Jupyter notebook - only call this when you are done!
     """
 
-    print("Exiting...")
+    print_system_text("Exiting...")
     return "__pass__"
 
 functions = [

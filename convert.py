@@ -7,22 +7,8 @@ nbclient_path = subprocess.check_output(["python","-c","import nbclient; print(n
 # switch the __init__.py to client.py
 client_path = os.path.join(os.path.dirname(nbclient_path),"client.py")
 
-print("nbclient path:",nbclient_path)
-
 with open(client_path,"r") as f:
     nbclient_source = f.read()
-
-"""
-After this line:
-    def process_message(
-        self, msg: t.Dict, cell: NotebookNode, cell_index: int
-    ) -> t.Optional[t.List]:
-Add this line:
-        try:
-            self.save()
-        except:
-            print("Client save failed")
-"""
 
 old_str = """
     def process_message(

@@ -4,6 +4,7 @@ import os
 
 from docstring_parser import parse
 import openai
+from .print import print_system_text,print_agent_response
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -28,7 +29,7 @@ def complete_with_functions(question, *functions):
     }
     with open("workspace/req.json", "w") as f:
         json.dump(req, f, indent=2)
-    print("Thinking...")
+    print_system_text("JupyterGPT is thinking...")
     response = openai.ChatCompletion.create(**req)
     if not any([c["finish_reason"] == "function_call" for c in response["choices"]]):
         return response["choices"][0]["message"]["content"]
@@ -58,7 +59,7 @@ def call_functions(response, *functions):
         if c["finish_reason"] == "function_call":
             msg = c["message"]
             if "content" in msg:
-                print(msg["content"])
+                print_agent_response(msg["content"])
             messages.append(msg)
             func_data = msg["function_call"]
             try:

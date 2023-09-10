@@ -3,8 +3,7 @@ FROM gcr.io/kaggle-images/python
 #us-docker.pkg.dev/colab-images/public/runtime
 #
 
-RUN pip install nbconvert nbclient
-RUN pip install openai docstring_parser tiktoken
+RUN pip install nbconvert nbclient openai docstring_parser tiktoken termcolor
 
 COPY kaggle.json /root/.kaggle/kaggle.json
 
