@@ -57,11 +57,14 @@ def call_functions(response, *functions):
     for c in response["choices"]:
         if c["finish_reason"] == "function_call":
             msg = c["message"]
+            if "content" in msg:
+                print(msg["content"])
             messages.append(msg)
             func_data = msg["function_call"]
             try:
                 args = json.loads(func_data["arguments"])
             except:
+                raise Exception("Error parsing arguments for function call")
                 print("Error parsing arguments for function call")
                 print("Function call:", func_data)
                 input("What to do?")

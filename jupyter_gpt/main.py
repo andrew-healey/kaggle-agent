@@ -41,12 +41,14 @@ while True:
 
     try:
         response = complete_with_functions(system_prompt, *functions)
+        break
     except Exception as e:
         if "maximum context length" in str(e):
             print("Context overflowed, continuing with fresh context")
+        elif "Error parsing arguments":
+            print("Error parsing arguments, continuing with fresh context")
         else:
             raise e
     
-    break
 
-print(response)
+print("Done!")
