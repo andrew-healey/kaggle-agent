@@ -1,0 +1,8 @@
+lxml
+bs4
+nbconvert
+nbclient
+openai
+docstring_parser
+tiktoken
+termcolor

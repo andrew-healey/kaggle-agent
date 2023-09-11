@@ -2,6 +2,7 @@ from .functions import complete_with_functions
 from .tools import functions
 from .stringifyIpynb import stringifyIpynb
 from .print import print_agent_response, print_system_text
+from .kaggle_download import download_notebook
 
 import os
 
@@ -10,11 +11,10 @@ if not os.path.exists("kaggle"):
     os.mkdir("kaggle")
 
 # download from kaggle link
-print_system_text("Paste kaggle download code (leave blank to skip)")
-notebook_cmd = input()
-if len(notebook_cmd) > 0:
-    os.system(notebook_cmd+" -p kaggle/")
-    os.system("mv kaggle/* workspace/notebook.ipynb")
+print_system_text("Paste kaggle notebook (leave blank to skip)")
+notebook_url = input()
+if len(notebook_url) > 0:
+    download_notebook(notebook_url)
 
 print_agent_response("What would you like me to do?")
 user_request = input()

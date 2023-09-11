@@ -63,6 +63,9 @@ def complete_with_functions(question, *functions):
                 else:
                     assert "arguments" in function_call,"Function call should have arguments if it's a streaming response"
                     partial_message["function_call"]["arguments"] += function_call["arguments"]
+    
+    if partial_message["content"] is not None:
+        print()
             
     if finish_reason != "function_call":
         return partial_message["content"]
@@ -71,8 +74,6 @@ def complete_with_functions(question, *functions):
         json.dump(deltas, f, indent=2)
     assert partial_message["role"] is not None,"Role should be defined"
     assert partial_message["function_call"] is not None,"Function call should be defined"
-    if partial_message["content"] is None:
-        del partial_message["content"]
 
     messages,should_continue = call_functions(partial_message, *functions)
     req["messages"].extend(messages)
